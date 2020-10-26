@@ -59,3 +59,7 @@ class Data:
                 newClass._audience = self._rooms[rnd.randrange(0, len(self._rooms))]
                 newClass._teacher = subjects[j]._teachers[rnd.randrange(0, len(subjects[j]._teachers))]
                 self._classes.append(newClass)
+
+
+        for i in self._classes:
+            print(str(i))

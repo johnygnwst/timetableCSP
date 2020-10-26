@@ -101,6 +101,6 @@ my_csp = {VARIABLES: classes,
           }
 
 
-def get_counter():
+def get_counter_rec():
   global counter
   return counter
