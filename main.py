@@ -1,5 +1,4 @@
 from csp import *
-from data import *
 
-for c in my_csp[VARIABLES]:
-    print(c)
+result = recursive_backtracking(init_assignment(my_csp), my_csp)
+print(str(counter) + "; " + str(result))

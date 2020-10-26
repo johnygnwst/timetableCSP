@@ -1,5 +1,7 @@
 from data import *
 data = Data()
+classes = data._classes
+meeting_times = data.MEETING_TIMES
 
 counter = 0
 
@@ -76,12 +78,11 @@ def constraint_propagation(assignment, csp):
 
 
 ####################### constraints #######################
-def eq(a, b): return a is not None and b is not None and a == b
 
 
 ###########################################################
 
 
-my_csp = {VARIABLES: data._classes,
-          DOMAINS: data.MEETING_TIMES,
+my_csp = {VARIABLES: classes,
+          DOMAINS: meeting_times,
           CONSTRAINTS: []}
