@@ -61,5 +61,3 @@ class Data:
                 self._classes.append(newClass)
 
 
-        for i in self._classes:
-            print(str(i))

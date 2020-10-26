@@ -45,12 +45,9 @@ def init_assignment(csp):
 #mrv backtracking
 def mrv_backtracking(assignment, csp):
   global mrv_domains
-
   if is_complete(assignment):
     return assignment
-
   var = find_mrv(assignment,csp)
-  print(var)
   for value in csp[DOMAINS]:
     if (is_in_domain(value, mrv_domains[var])):
       assignment[var] = value
@@ -61,11 +58,6 @@ def mrv_backtracking(assignment, csp):
           return result
       assignment[var] = None
       undo(assignment,csp)
-
-
-  
-  for i in assignment.keys():
-    print(str(i) + "   " + assignment.get(i))
   return FAILURE
 
 
@@ -133,8 +125,6 @@ def find_mrv(assignment, csp):
       if (domain_len(mrv_domains[i]) < min_domain):
         min_val = i
         min_domain = domain_len(mrv_domains[min_val])
-  if (min_val==0):
-    print("zero lennnn")
   return min_val
 
 def equal(a, b): return a is not None and b is not None and a == b
@@ -174,7 +164,6 @@ my_csp = {VARIABLES: classes,
           DOMAINS: meeting_times,
           CONSTRAINTS: [same_audiences, same_teacher]
           }
-
 
 def get_counter():
   global counter
