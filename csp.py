@@ -45,10 +45,14 @@ def recursive_backtracking(assignment, csp):
   for value in csp[DOMAINS]:
     assignment[var] = value
     if is_consistent(assignment, csp[CONSTRAINTS]):
+      print("kek")
       result = recursive_backtracking(assignment, csp)
       if result != FAILURE:
         return result
     assignment[var] = None
+  for i in assignment.keys():
+    if assignment.get(i) is not None:
+      print(str(i) + "   " + assignment.get(i))
   return FAILURE
 
 
@@ -80,20 +84,40 @@ def constraint_propagation(assignment, csp):
 ####################### constraints #######################
 def equal(a, b): return a is not None and b is not None and a == b
 
+# def test(assignment):
+#   return equal(assignment[], assignment[])
+
+
+def get_var(assignment):
+  arr = []
+  for i in assignment.keys():
+    newClass = i
+    if assignment[i] is not None:
+      arr.append(newClass)
+  return arr
+
+
+
 def same_audiences(assignment):
-  if assignment.get(VARIABLES) is not None:
-    for i in assignment.get(VARIABLES):
-      for j in assignment.get(VARIABLES):
-        if equal(i._audience, j._audience):
-          return True
+  arr = get_var(assignment)
+  if len(arr) == 1:
+    return False
+  for i in arr:
+    for j in arr:
+      if equal(i._audience, j._audience) and i!=j:
+        return True
+  return False
 
 
 def same_teacher(assignment):
-  if assignment.get(VARIABLES) is not None:
-    for i in assignment.get(VARIABLES):
-      for j in assignment.get(VARIABLES):
-        if equal(i._teacher, j._teacher):
-          return True
+  arr = get_var(assignment)
+  if len(arr) == 1:
+    return False
+  for i in arr:
+    for j in arr:
+      if equal(i._teacher, j._teacher) and i!=j:
+        return True
+  return False
 
 
 ###########################################################
@@ -103,3 +127,8 @@ my_csp = {VARIABLES: classes,
           DOMAINS: meeting_times,
           CONSTRAINTS: [same_audiences, same_teacher]
           }
+
+
+def get_counter():
+  global counter
+  return counter
