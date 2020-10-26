@@ -36,8 +36,7 @@ class Class:
         self._spec = spec
         self._subject = subject
         self._teacher = None
-        self._lessonTime = None
         self._audience = None
 
     def __str__(self):
-        return str(self._spec._name) + "," + str(self._audience._number) + "," + str(self._teacher._name) + "," + str(self._lessonTime._time)
+        return str(self._spec._name) + "," + str(self._audience._number) + "," + str(self._teacher._name)

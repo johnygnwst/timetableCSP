@@ -1,13 +1,14 @@
 from university import *
+import random as rnd
 
 class Data:
     ROOMS = [["R1",20], ["R2",35], ["R3",30], ["R4",15], ["R5",55], ["R6",20], ["R7",15], ["R8",10], ["R9",35]]
-    MEETING_TIMES = [["08:30 - 09:50"],
-                     ["10:00 - 11:20"],
-                     ["11:40 - 13:00"],
-                     ["13:30 - 14:50"],
-                     ["15:00 - 16:20"],
-                     ["16:30 - 17:50"]]
+    MEETING_TIMES = ["08:30 - 09:50",
+                     "10:00 - 11:20",
+                     "11:40 - 13:00",
+                     "13:30 - 14:50",
+                     "15:00 - 16:20",
+                     "16:30 - 17:50"]
     INSTRUCTORS = [["James Web"],
                    ["Mike Brown"],
                    ["Steve Day"],
@@ -47,3 +48,15 @@ class Data:
         self._numberOfClasses = 0
         for i in range(0, len(self._specs)):
             self._numberOfClasses += len(self._specs[i]._subjects)
+
+        self._classes = []
+        self._classNumb = 0
+        specs = self._specs
+        for i in range(0, len(specs)):
+            subjects = specs[i]._subjects
+            for j in range(0, len(subjects)):
+                newClass = Class(self._classNumb, specs[i], subjects[j])
+                self._classNumb = self._classNumb + 1
+                newClass._audience = self._rooms[rnd.randrange(0, len(self._rooms))]
+                newClass._teacher = subjects[j]._teachers[rnd.randrange(0, len(subjects[j]._teachers))]
+                self._classes.append(newClass)
