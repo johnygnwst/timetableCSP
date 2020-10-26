@@ -78,6 +78,22 @@ def constraint_propagation(assignment, csp):
 
 
 ####################### constraints #######################
+def equal(a, b): return a is not None and b is not None and a == b
+
+def same_audiences(assignment):
+  if assignment.get(VARIABLES) is not None:
+    for i in assignment.get(VARIABLES):
+      for j in assignment.get(VARIABLES):
+        if equal(i._audience, j._audience):
+          return True
+
+
+def same_teacher(assignment):
+  if assignment.get(VARIABLES) is not None:
+    for i in assignment.get(VARIABLES):
+      for j in assignment.get(VARIABLES):
+        if equal(i._teacher, j._teacher):
+          return True
 
 
 ###########################################################
@@ -85,4 +101,5 @@ def constraint_propagation(assignment, csp):
 
 my_csp = {VARIABLES: classes,
           DOMAINS: meeting_times,
-          CONSTRAINTS: []}
+          CONSTRAINTS: [same_audiences, same_teacher]
+          }
