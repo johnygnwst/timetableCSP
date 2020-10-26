@@ -17,6 +17,7 @@ def is_complete(assignment):
 def select_unassigned_variable(variables, assignment):
   for var in variables:
     if assignment[var] is None:
+      print("select empty: " + str(var))
       return var  
 
 
@@ -45,14 +46,16 @@ def recursive_backtracking(assignment, csp):
   for value in csp[DOMAINS]:
     assignment[var] = value
     if is_consistent(assignment, csp[CONSTRAINTS]):
-      print("kek")
+      print("no conflicts ")
       result = recursive_backtracking(assignment, csp)
       if result != FAILURE:
         return result
     assignment[var] = None
+  print("Failure: ")
   for i in assignment.keys():
     if assignment.get(i) is not None:
       print(str(i) + "   " + assignment.get(i))
+  print("____")
   return FAILURE
 
 
@@ -104,7 +107,7 @@ def same_audiences(assignment):
     return False
   for i in arr:
     for j in arr:
-      if equal(i._audience, j._audience) and i!=j:
+      if equal(i._audience, j._audience) and i!=j and assignment[i]==assignment[j]:
         return True
   return False
 
@@ -115,7 +118,7 @@ def same_teacher(assignment):
     return False
   for i in arr:
     for j in arr:
-      if equal(i._teacher, j._teacher) and i!=j:
+      if equal(i._teacher, j._teacher) and i!=j and assignment[i]==assignment[j]:
         return True
   return False
 
