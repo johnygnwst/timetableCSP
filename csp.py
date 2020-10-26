@@ -17,7 +17,6 @@ def is_complete(assignment):
 def select_unassigned_variable(variables, assignment):
   for var in variables:
     if assignment[var] is None:
-      print("select empty: " + str(var))
       return var  
 
 
@@ -46,42 +45,12 @@ def recursive_backtracking(assignment, csp):
   for value in csp[DOMAINS]:
     assignment[var] = value
     if is_consistent(assignment, csp[CONSTRAINTS]):
-      print("no conflicts ")
       result = recursive_backtracking(assignment, csp)
       if result != FAILURE:
         return result
     assignment[var] = None
-  print("Failure: ")
-  for i in assignment.keys():
-    if assignment.get(i) is not None:
-      print(str(i) + "   " + assignment.get(i))
-  print("____")
   return FAILURE
 
-
-#minimum remaining values
-def mrv(assignment, csp):
-  pass
-
-
-#degree heuristic
-def degree_heuristics(assignment, csp):
-  pass
-
-
-#heuristic with the least restrictive value
-def lrv(assignment, csp):
-  pass
-
-
-#forward checking heuristic
-def forward_checking(assignment, csp):
-  pass
-
-
-#constraint propagation heuristic
-def constraint_propagation(assignment, csp):
-  pass
 
 
 ####################### constraints #######################

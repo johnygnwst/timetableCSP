@@ -40,11 +40,10 @@ class Data:
         subject9 = Subject("History", [self._instructors[4], self._instructors[7]], 20)
         self._subjects = [subject1, subject2, subject3, subject4, subject5, subject6, subject7, subject8, subject9]
 
-        spec1 = Speciality("KN", [subject1, subject2, subject3])
-        spec2 = Speciality("IPZ", [subject1, subject2, subject9])
-        spec3 = Speciality("PRYMAT", [subject1, subject8, subject9])
+        spec1 = Speciality("KN", [subject1, subject2, subject3, subject5, subject6, subject7, subject8])
+        spec2 = Speciality("IPZ", [subject1, subject2, subject4, subject5, subject6, subject8, subject9])
+        spec3 = Speciality("PRYMAT", [subject2, subject3, subject4, subject5, subject6,  subject8, subject9])
         self._specs = [spec1, spec2, spec3]
-
         self._numberOfClasses = 0
         for i in range(0, len(self._specs)):
             self._numberOfClasses += len(self._specs[i]._subjects)
@@ -60,6 +59,3 @@ class Data:
                 newClass._audience = self._rooms[rnd.randrange(0, len(self._rooms))]
                 newClass._teacher = subjects[j]._teachers[rnd.randrange(0, len(subjects[j]._teachers))]
                 self._classes.append(newClass)
-
-        for i in self._classes:
-            print(i)

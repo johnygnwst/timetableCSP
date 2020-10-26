@@ -39,4 +39,4 @@ class Class:
         self._audience = None
 
     def __str__(self):
-        return str(self._spec._name) + "," + str(self._audience._number) + "," + str(self._teacher._name)
+        return str(self._spec._name) + ", " + str(self._audience._number) + ", " + str(self._teacher._name) + ", " + str(self._subject._name)
