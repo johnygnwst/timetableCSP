@@ -11,8 +11,7 @@ class Data:
         self._specs = self.init_specs(SPECIALITIES)
         self._rooms = ROOMS
         self._classes = self.init_classes()
-        for c in self._classes:
-            print(c)
+      
     
         
 

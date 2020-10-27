@@ -3,7 +3,6 @@ data = Data()
 classes = data._classes
 meeting_times = data.get_domains()
 
-counter = 0
 
 DOMAINS = "DOMAINS"
 VARIABLES = "VARIABLES"
@@ -23,18 +22,10 @@ def select_unassigned_variable(variables, assignment):
 
 
 def is_consistent(assignment, constraints):
-  global counter
-  counter += 1
   for constraint_violated in constraints:
     if constraint_violated(assignment):
       return False
   return True
-
-
-
-def get_counter():
-  global counter
-  return counter
 
 
 
@@ -59,6 +50,12 @@ def same_teacher(assignment):
       if equal(i._teacher, j._teacher) and i!=j and assignment[i]==assignment[j]:
         return True
   return False
+
+
+
+
+
+
 
 
 

@@ -1,44 +1,70 @@
-from csp import *
-from mrv import *
-from lcv import *
-from data import *
 from csp_init import *
+import prettytable
+from csp import *
+from degree_heuristic import *
+from lcv import *
+from mrv import *
+from forward_checking import *
 
 
 
-# c = my_csp
-
-# result = "FAIL"
-# while (result == "FAIL"):
-# 	result = recursive_backtracking(init_assignment(c), c)
 
 
-# print(str(get_counter_csp()))
-# for i in result.keys():
-#     #print(str(i) + "   " + str(result[i]))
-#     print(str(i) + "   " + result.get(i))
 
 
-#result = mrv_backtracking(init_assignment(my_csp), my_csp)
+result_default = backtracking(init_assignment_default(my_csp), my_csp, default_heuristic)
+#print("Counter for default backtracking: " + str(get_counter_default()))
+
+result_lcv = backtracking_lcv(init_assignment_lcv(my_csp), my_csp, lcv_heuristic)
+print("Counter for backtracking with LCV: " + str(get_counter_lcv()))
 
 
-# print("#############################################################")
-result = recursive_backtracking(init_assignment(my_csp), my_csp)
-print(str(get_counter()))
+result_mrv = mrv_backtracking(init_assignment_mrv(my_csp),my_csp)
+print("Counter for backtracking with MRV: " + str(get_counter_mrv()))
+
+
+
+result_degree = degree_backtracking(init_assignment_degree(my_csp), my_csp)
+print("Counter for backtracking with Degree Heuristic: " + str(get_counter_degree()))
+
+
+result_forward_check = forward_checking(init_assignment_forw(my_csp), my_csp)
+print("Counter for backtracking with Forward Checking: " + str(get_counter_forw()))
+
+
+result = result_forward_check
+
+
+monday, tuesday, wednesday, thursday, friday = [], [], [], [], []
+days = [monday, tuesday, wednesday, thursday, friday]
 for i in result.keys():
-	print(str(i) + "   " + str(result[i]))
-    #print(str(i) + "   " + result.get(i))
+    if result[i] < 6:
+        monday.append((i,result[i]))
+    elif result[i] < 12 and result[i]>=6:
+        tuesday.append((i,result[i]-6))
+    elif result[i] < 18 and result[i]>=12:
+        wednesday.append((i,result[i] - 12))
+    elif result[i] < 24 and result[i]>=18:
+        thursday.append((i, result[i] - 18))
+    elif result[i] >= 24:
+        friday.append((i, result[i] - 24))
 
 
+def print_day(day,l):
+	r = ""
+	for d,n in day:
+		if (l == n):
+			r += str(d) + "\n" 
+	return r
 
 
-# print("#############################################################")
-# result = lcv_backtracking(init_assignment_lcv(c), c)
-# print(str(get_counter_lcv()))
-# for i in result.keys():
-#     #print(str(i) + "   " + str(result[i]))
-#     print(str(i) + "   " + result.get(i))
-
+table = prettytable.PrettyTable(['Lesson Time', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'])
+k = 0
+for i in range(len(MEETING_TIMES)):
+    table.add_row([MEETING_TIMES[i], print_day(monday,k), print_day(tuesday,k), print_day(wednesday,k), print_day(thursday,k), print_day(friday,k)])
+    k+=1
+print(table)
+	
 
 
 

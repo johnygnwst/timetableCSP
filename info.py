@@ -52,7 +52,7 @@ SUBJECTS = [ {"name":"Algorithms", "number_of_students": 60, "groups": 3, "teach
 
 SPECIALITIES = [{"name":"KN", "subjects": ["Algorithms", "Algebra", "Mmoz", "Mopi", "Android"]},
 				{"name":"IPZ", "subjects":["Algorithms", "AI", "NIT", "IOS", "C++"]},
-				{"name":"KN", "subjects":["Algebra", "NIT", "C++", "IOS", "Android"]}]
+				{"name":"PRYMAT", "subjects":["Algebra", "NIT", "C++", "IOS", "Android"]}]
 
 
     
