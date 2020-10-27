@@ -74,7 +74,19 @@ def same_spec(assignment):
 
 
 
+def groups_conflict(assignment):
+  arr = get_var(assignment)
+  if len(arr) == 1:
+    return False
+  for i in arr:
+    for j in arr:
+      if equal(i._type_of_class, j._type_of_class) and i!=j and assignment[i]==assignment[j] :
+        return True
+  return False
+
+
+
 my_csp = {VARIABLES: classes,
           DOMAINS: meeting_times,
-          CONSTRAINTS: [same_teacher, same_spec]
+          CONSTRAINTS: [same_teacher, same_spec, groups_conflict]
           }
