@@ -5,6 +5,7 @@ from degree_heuristic import *
 from lcv import *
 from mrv import *
 from forward_checking import *
+from constraint_propagation import *
 
 
 
@@ -32,7 +33,11 @@ result_forward_check = forward_checking(init_assignment_forw(my_csp), my_csp)
 print("Counter for backtracking with Forward Checking: " + str(get_counter_forw()))
 
 
-result = result_forward_check
+result_constraint_propagation = constraint_propagation(init_assignment_con(my_csp), my_csp)
+print("Counter for backtracking with Constraint Propagation: " + str(get_counter_con()))
+
+
+result = result_constraint_propagation
 
 
 monday, tuesday, wednesday, thursday, friday = [], [], [], [], []
