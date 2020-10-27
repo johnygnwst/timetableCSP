@@ -1,63 +1,63 @@
-from university import *
+
 import random as rnd
+from info import *
+from model import *
 
 class Data:
-    ROOMS = [["R1",20], ["R2",35], ["R3",30], ["R4",15], ["R5",55], ["R6",20], ["R7",15], ["R8",10], ["R9",35]]
-    MEETING_TIMES = ["08:30 - 09:50",
-                     "10:00 - 11:20",
-                     "11:40 - 13:00",
-                     "13:30 - 14:50",
-                     "15:00 - 16:20",
-                     "16:30 - 17:50"]
-    INSTRUCTORS = [["James Web"],
-                   ["Mike Brown"],
-                   ["Steve Day"],
-                   ["Jane Doe"],
-                   ["Lily Johns"],
-                   ["George Miller"],
-                   ["Andrew Lively"],
-                   ["Jannifer Dickens"]]
-
     def __init__(self):
-        self._rooms = []
-        self._meetingTimes = []
-        self._instructors = []
-        for i in range(0, len(self.ROOMS)):
-            self._rooms.append(Audience(self.ROOMS[i][0], self.ROOMS[i][1]))
-        for i in range(0, len(self.MEETING_TIMES)):
-            self._meetingTimes.append(LessonTime(self.MEETING_TIMES[i][0]))
-        for i in range(0, len(self.INSTRUCTORS)):
-            self._instructors.append(Teacher(self.INSTRUCTORS[i][0]))
+        self._days = DAYS
+        self._meetingTimes = MEETING_TIMES
+        self._subjects = self.init_subjects(SUBJECTS)
+        self._specs = self.init_specs(SPECIALITIES)
+        self._rooms = ROOMS
+        self._classes = self.init_classes()
+        for c in self._classes:
+            print(c)
+    
+        
 
-        subject1 = Subject("Math",[self._instructors[0], self._instructors[1]], 40)
-        subject2 = Subject("Literature", [self._instructors[0], self._instructors[2]], 20)
-        subject3 = Subject("Physics", [self._instructors[7], self._instructors[1]], 30)
-        subject4 = Subject("Algorithms", [self._instructors[2], self._instructors[3]], 55)
-        subject5 = Subject("English", [self._instructors[3]], 22)
-        subject6 = Subject("Biology", [self._instructors[0], self._instructors[2]], 30)
-        subject7 = Subject("Chemistry", [self._instructors[1], self._instructors[3]], 35)
-        subject8 = Subject("Data Science", [self._instructors[6], self._instructors[5]], 40)
-        subject9 = Subject("History", [self._instructors[4], self._instructors[7]], 20)
-        self._subjects = [subject1, subject2, subject3, subject4, subject5, subject6, subject7, subject8, subject9]
+    def init_subjects(self, subjects):
+        subj = []
+        for s in subjects:
+            name = s["name"]
+            num = s["number_of_students"]
+            gr = s["groups"]
+            tea = s["teacher"]
+            subj.append(Subject(name, num,gr, tea))
+        return subj
 
-        spec1 = Speciality("KN", [subject1, subject2, subject3, subject5, subject6, subject7, subject8])
-        spec2 = Speciality("IPZ", [subject1, subject2, subject4, subject5, subject6, subject8, subject9])
-        spec3 = Speciality("PRYMAT", [subject2, subject3, subject4, subject5, subject6,  subject8, subject9])
-        self._specs = [spec1, spec2, spec3]
-        self._numberOfClasses = 0
-        for i in range(0, len(self._specs)):
-            self._numberOfClasses += len(self._specs[i]._subjects)
+    def get_domains(self):
+        domains = []
+        for i in range(30):
+            domains.append(i)
+        return domains
 
-        self._classes = []
-        self._classNumb = 0
-        specs = self._specs
-        for i in range(0, len(specs)):
-            subjects = specs[i]._subjects
-            for j in range(0, len(subjects)):
-                newClass = Class(self._classNumb, specs[i], subjects[j])
-                self._classNumb = self._classNumb + 1
-                newClass._audience = self._rooms[rnd.randrange(0, len(self._rooms))]
-                newClass._teacher = subjects[j]._teachers[rnd.randrange(0, len(subjects[j]._teachers))]
-                self._classes.append(newClass)
+
+    def init_specs(self, specialities):
+        spec = []
+        for s in specialities:
+            name = s["name"]
+            sub = []
+            for i in s["subjects"]:
+                for j in self._subjects:
+                    if i == j._name:
+                        sub.append(j)
+            spec.append(Speciality(name, sub))
+        return spec
+
+
+    def init_classes(self):
+        classes = []
+        for sp in self._specs:
+            for sub in sp._subjects:
+                lect = Class(sp, sub, None, None, None, "lecture")
+                classes.append(lect)
+                i = 1
+                for g in range(sub._groups):
+                    st = "Practice " + str(i)
+                    cl = Class(sp, sub, None, None, None, st)
+                    classes.append(cl)
+                    i+=1
+        return classes
 
 
