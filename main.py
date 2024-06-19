@@ -1,44 +1,52 @@
 from csp_init import *
+from info import *
 import prettytable
 from csp import *
 from degree_heuristic import *
 from lcv import *
+from lcv_improved import lcv_heuristic_improved, backtracking_lcv_improved, init_assignment_lcv_improved, \
+    get_counter_lcv_improved
 from mrv import *
 from forward_checking import *
 from constraint_propagation import *
+import time as time_module
 
 
 
 
 
 
+stime = time_module.perf_counter()
 
-result_default = backtracking(init_assignment_default(my_csp), my_csp, default_heuristic)
+
+#result_default = backtracking(init_assignment_default(my_csp), my_csp, default_heuristic)
 #print("Counter for default backtracking: " + str(get_counter_default()))
 
-result_lcv = backtracking_lcv(init_assignment_lcv(my_csp), my_csp, lcv_heuristic)
-print("Counter for backtracking with LCV: " + str(get_counter_lcv()))
-
-
-result_mrv = mrv_backtracking(init_assignment_mrv(my_csp),my_csp)
-print("Counter for backtracking with MRV: " + str(get_counter_mrv()))
-
-
-
+#result_lcv = backtracking_lcv(init_assignment_lcv(my_csp), my_csp, lcv_heuristic)
+#print("Counter for backtracking with LCV: " + str(get_counter_lcv()))
+#
+#
+#result_mrv = mrv_backtracking(init_assignment_mrv(my_csp),my_csp)
+#print("Counter for backtracking with MRV: " + str(get_counter_mrv()))
+#
+#
+#
 result_degree = degree_backtracking(init_assignment_degree(my_csp), my_csp)
 print("Counter for backtracking with Degree Heuristic: " + str(get_counter_degree()))
+#
+#
+#result_forward_check = forward_checking(init_assignment_forw(my_csp), my_csp)
+#print("Counter for backtracking with Forward Checking: " + str(get_counter_forw()))
+#
+#
+#result_constraint_propagation = constraint_propagation(init_assignment_con(my_csp), my_csp)
+#print("Counter for backtracking with Constraint Propagation: " + str(get_counter_con()))
+#
+#result_lcv_improved = backtracking_lcv_improved(init_assignment_lcv_improved(my_csp), my_csp, lcv_heuristic_improved)
+#print("Counter for backtracking with LCV_improved: " + str(get_counter_lcv_improved()))
 
 
-result_forward_check = forward_checking(init_assignment_forw(my_csp), my_csp)
-print("Counter for backtracking with Forward Checking: " + str(get_counter_forw()))
-
-
-result_constraint_propagation = constraint_propagation(init_assignment_con(my_csp), my_csp)
-print("Counter for backtracking with Constraint Propagation: " + str(get_counter_con()))
-
-
-result = result_constraint_propagation
-
+result = result_degree
 
 monday, tuesday, wednesday, thursday, friday = [], [], [], [], []
 days = [monday, tuesday, wednesday, thursday, friday]
@@ -59,7 +67,7 @@ def print_day(day,l):
 	r = ""
 	for d,n in day:
 		if (l == n):
-			r += str(d) + "\n" 
+			r += str(d) + "\n"
 	return r
 
 
@@ -69,7 +77,8 @@ for i in range(len(MEETING_TIMES)):
     table.add_row([MEETING_TIMES[i], print_day(monday,k), print_day(tuesday,k), print_day(wednesday,k), print_day(thursday,k), print_day(friday,k)])
     k+=1
 print(table)
-	
 
+
+print(time_module.perf_counter() - stime)
 
 
