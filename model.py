@@ -1,4 +1,3 @@
-
 #Object which contains all the information about one class
 class Class:
     def __init__(self, speciality, subject, room, time, day, type_of_class):
