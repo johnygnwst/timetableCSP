@@ -1,3 +1,5 @@
+from random import shuffle
+
 from csp_init import *
 csp = my_csp
 
@@ -36,11 +38,13 @@ def getRoom(csp, assignment,var, value):
 def forward_checking(assignment,csp):
   global var_domains
   global counter
+  rnd_domains_f = csp[DOMAINS][:]
   while True:
     if is_complete(assignment):
       return assignment
     var = select_unassigned_variable(csp[VARIABLES],assignment)
-    for value in csp[DOMAINS]:
+    shuffle(rnd_domains_f)
+    for value in rnd_domains_f:
 
       if is_in_domain(var, value):
         assignment[var] = value
@@ -52,7 +56,7 @@ def forward_checking(assignment,csp):
         else: 
           assignment[var] = None
           var._room = None
-          undo_domains(assignment,csp)
+          undo(assignment,csp)
   return FAILURE
 
 
@@ -76,11 +80,7 @@ def add_domains(assignment, csp, value):
           for k in range(len(var_domains[i])):
             if (var_domains[i][k] == assignment[j]):
               var_domains[i][k] = None
-        if (i._type_of_class == j._type_of_class):
-          for k in range(len(var_domains[i])):
-            if (var_domains[i][k] == assignment[j]):
-              var_domains[i][k] = None
-        if (i._speciality == j._speciality and (i._type_of_class == "lecture") or (j._type_of_class == "lecture")):
+        if (i._speciality == j._speciality ):
           for k in range(len(var_domains[i])):
             if (var_domains[i][k] == assignment[j]):
               var_domains[i][k] = None
@@ -89,20 +89,16 @@ def add_domains(assignment, csp, value):
 def undo(assignment, csp):
   global var_domains
   for var in csp[VARIABLES]:
-    mrv_domains[var] = csp[DOMAINS].copy()
+    var_domains[var] = csp[DOMAINS].copy()
   for i in csp[VARIABLES]:
     for j in csp[VARIABLES]:
       if (assignment[j] is not None):
         if (not i==j):
           if (i._teacher == j._teacher):
-            for k in range(len(mrv_domains[i])):
-              if (var_domains[i][k] == assignment[j]):
-                var_domains[i][k] = None
-          if (i._type_of_class == j._type_of_class):
             for k in range(len(var_domains[i])):
               if (var_domains[i][k] == assignment[j]):
                 var_domains[i][k] = None
-          if (i._speciality == j._speciality and (i._type_of_class == "lecture") or (j._type_of_class == "lecture")):
+          if (i._speciality == j._speciality):
             for k in range(len(var_domains[i])):
               if (var_domains[i][k] == assignment[j]):
                 var_domains[i][k] = None
@@ -111,6 +107,8 @@ def undo(assignment, csp):
 def get_counter_forw():
   global counter
   return counter
+
+
 
 
 
