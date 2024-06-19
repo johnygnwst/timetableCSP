@@ -1,5 +1,8 @@
+from random import shuffle
+
 from csp_init import *
 from csp import *
+
 csp = my_csp
 
 counter = 0
@@ -39,10 +42,12 @@ def init_degree_values(csp):
 def degree_backtracking(assignment, csp):
   global degree_values
   global counter
+  rnd_domains_d = csp[DOMAINS][:]
   while True:
     if is_complete(assignment):
       return assignment
-    for value in csp[DOMAINS]:
+    shuffle(rnd_domains_d)
+    for value in rnd_domains_d:
       var = choose_value(assignment,csp)
       assignment[var] = value
       update_values(assignment,csp)
@@ -56,9 +61,9 @@ def degree_backtracking(assignment, csp):
         update_values(assignment,csp)
   return FAILURE
 
-def choose_value(assignment, csp):
+def choose_value(assignment,csp):
   global degree_values
-  degree_values.sort(key=lambda l:l[1], reverse=False)
+  degree_values.sort(key=lambda l:l[1], reverse=True)
   for i in degree_values:
     if assignment[i[0]] is None:
       return i[0]
@@ -84,6 +89,7 @@ def update_values(assignment, csp):
 def get_counter_degree():
   global counter
   return counter
+
 
 
 
