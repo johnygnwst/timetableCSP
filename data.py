@@ -1,4 +1,5 @@
 
+
 import random as rnd
 from info import *
 from model import *
@@ -56,5 +57,4 @@ class Data:
                     classes.append(cl)
                     i+=1
         return classes
-
 
