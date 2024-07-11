@@ -115,4 +115,3 @@ def find_mrv(assignment, csp):
 def get_counter_mrv():
   global counter
   return counter
-
